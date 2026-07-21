@@ -1,12 +1,21 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { Mail, Send, CheckCircle2, Copy, Check } from 'lucide-react';
+import { Mail, Send, CheckCircle2, AlertCircle, Copy, Check } from 'lucide-react';
 import { GithubIcon, FacebookIcon } from './Icons';
 
 export default function Contact() {
   const { t } = useLanguage();
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [status, setStatus] = useState('idle'); // 'idle' | 'sending' | 'success'
+
+  // State Management
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [success, setSuccess] = useState('');
+  const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
 
   const handleInputChange = (e) => {
@@ -14,16 +23,43 @@ export default function Contact() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) return;
-    setStatus('sending');
 
-    setTimeout(() => {
-      setStatus('success');
-      setFormData({ name: '', email: '', message: '' });
-      setTimeout(() => setStatus('idle'), 5000);
-    }, 1200);
+    // Set loading state and reset previous feedback messages
+    setIsLoading(true);
+    setSuccess('');
+    setError('');
+
+    try {
+      const response = await fetch('https://api-kylliankoniz.onrender.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        }),
+      });
+
+      const data = await response.json().catch(() => ({}));
+
+      if (response.ok || response.status === 201) {
+        // Success: Reset form inputs and set success feedback
+        setFormData({ name: '', email: '', message: '' });
+        setSuccess(data.message || t('contact.form.successMsg') || 'Message sent successfully!');
+      } else {
+        // Server returned non-2xx status
+        setError(data.message || data.error || 'Failed to send message. Please try again.');
+      }
+    } catch (err) {
+      // Network or general fetch failure
+      setError('Network error: Unable to reach the server. Please check your connection.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const copyEmail = () => {
@@ -67,8 +103,8 @@ export default function Contact() {
                   >
                     {copied ? (
                       <>
-                        <Check className="w-3.5 h-3.5 text-green-600" />
-                        <span className="text-green-600">COPIED</span>
+                        <Check className="w-3.5 h-3.5 text-emerald-600" />
+                        <span className="text-emerald-600 font-semibold">COPIED</span>
                       </>
                     ) : (
                       <>
@@ -138,83 +174,89 @@ export default function Contact() {
           {/* Interactive Form Column */}
           <div className="lg:col-span-7">
             <div className="bg-white p-8 border border-[#d8dadd] shadow-sm">
-              {status === 'success' ? (
-                <div className="py-12 text-center flex flex-col items-center justify-center space-y-4">
-                  <CheckCircle2 className="w-12 h-12 text-[#ff6b4a]" />
-                  <h3 className="text-xl font-display font-bold text-[#2b2d31]">
-                    MESSAGE SENT
-                  </h3>
-                  <p className="text-sm text-[#5a6068] max-w-md">
-                    {t('contact.form.successMsg')}
-                  </p>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {/* Name Input */}
+                <div>
+                  <label className="block text-xs font-mono font-bold text-[#2b2d31] uppercase tracking-wider mb-2">
+                    {t('contact.form.nameLabel')} <span className="text-[#ff6b4a]">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    placeholder={t('contact.form.namePlaceholder')}
+                    disabled={isLoading}
+                    className="w-full px-4 py-3 bg-[#f7f7f5] border border-[#d8dadd] text-[#2b2d31] text-sm focus:outline-none focus:border-[#2b2d31] transition-colors font-sans placeholder:text-[#5a6068]/50 disabled:opacity-60"
+                  />
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  {/* Name Input */}
-                  <div>
-                    <label className="block text-xs font-mono font-bold text-[#2b2d31] uppercase tracking-wider mb-2">
-                      {t('contact.form.nameLabel')} <span className="text-[#ff6b4a]">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      placeholder={t('contact.form.namePlaceholder')}
-                      className="w-full px-4 py-3 bg-[#f7f7f5] border border-[#d8dadd] text-[#2b2d31] text-sm focus:outline-none focus:border-[#2b2d31] transition-colors font-sans placeholder:text-[#5a6068]/50"
-                    />
-                  </div>
 
-                  {/* Email Input */}
-                  <div>
-                    <label className="block text-xs font-mono font-bold text-[#2b2d31] uppercase tracking-wider mb-2">
-                      {t('contact.form.emailLabel')} <span className="text-[#ff6b4a]">*</span>
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      required
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      placeholder={t('contact.form.emailPlaceholder')}
-                      className="w-full px-4 py-3 bg-[#f7f7f5] border border-[#d8dadd] text-[#2b2d31] text-sm focus:outline-none focus:border-[#2b2d31] transition-colors font-sans placeholder:text-[#5a6068]/50"
-                    />
-                  </div>
+                {/* Email Input */}
+                <div>
+                  <label className="block text-xs font-mono font-bold text-[#2b2d31] uppercase tracking-wider mb-2">
+                    {t('contact.form.emailLabel')} <span className="text-[#ff6b4a]">*</span>
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    placeholder={t('contact.form.emailPlaceholder')}
+                    disabled={isLoading}
+                    className="w-full px-4 py-3 bg-[#f7f7f5] border border-[#d8dadd] text-[#2b2d31] text-sm focus:outline-none focus:border-[#2b2d31] transition-colors font-sans placeholder:text-[#5a6068]/50 disabled:opacity-60"
+                  />
+                </div>
 
-                  {/* Message Input */}
-                  <div>
-                    <label className="block text-xs font-mono font-bold text-[#2b2d31] uppercase tracking-wider mb-2">
-                      {t('contact.form.messageLabel')} <span className="text-[#ff6b4a]">*</span>
-                    </label>
-                    <textarea
-                      name="message"
-                      rows={5}
-                      required
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      placeholder={t('contact.form.messagePlaceholder')}
-                      className="w-full px-4 py-3 bg-[#f7f7f5] border border-[#d8dadd] text-[#2b2d31] text-sm focus:outline-none focus:border-[#2b2d31] transition-colors font-sans resize-none placeholder:text-[#5a6068]/50"
-                    ></textarea>
-                  </div>
+                {/* Message Input */}
+                <div>
+                  <label className="block text-xs font-mono font-bold text-[#2b2d31] uppercase tracking-wider mb-2">
+                    {t('contact.form.messageLabel')} <span className="text-[#ff6b4a]">*</span>
+                  </label>
+                  <textarea
+                    name="message"
+                    rows={5}
+                    required
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    placeholder={t('contact.form.messagePlaceholder')}
+                    disabled={isLoading}
+                    className="w-full px-4 py-3 bg-[#f7f7f5] border border-[#d8dadd] text-[#2b2d31] text-sm focus:outline-none focus:border-[#2b2d31] transition-colors font-sans resize-none placeholder:text-[#5a6068]/50 disabled:opacity-60"
+                  ></textarea>
+                </div>
 
-                  {/* Submit Button Accent Orange #ff6b4a */}
-                  <button
-                    type="submit"
-                    disabled={status === 'sending'}
-                    className="w-full py-4 bg-[#ff6b4a] text-white font-medium text-sm uppercase tracking-wider hover:bg-[#e05637] transition-colors duration-200 flex items-center justify-center gap-2 shadow-md cursor-pointer disabled:opacity-50"
-                  >
-                    {status === 'sending' ? (
-                      <span>{t('contact.form.sending')}</span>
-                    ) : (
-                      <>
-                        <Send className="w-4 h-4" />
-                        <span>{t('contact.form.submitBtn')}</span>
-                      </>
-                    )}
-                  </button>
-                </form>
-              )}
+                {/* Status Messages Feedback */}
+                {success && (
+                  <div className="p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-medium flex items-center gap-3">
+                    <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
+                    <span>{success}</span>
+                  </div>
+                )}
+
+                {error && (
+                  <div className="p-4 bg-[#ff6b4a]/10 border border-[#ff6b4a]/40 text-[#ff6b4a] text-sm font-medium flex items-center gap-3">
+                    <AlertCircle className="w-5 h-5 text-[#ff6b4a] shrink-0" />
+                    <span>{error}</span>
+                  </div>
+                )}
+
+                {/* Submit Button */}
+                <button
+                  type="submit"
+                  disabled={isLoading}
+                  className="w-full py-4 bg-[#ff6b4a] text-white font-medium text-sm uppercase tracking-wider hover:bg-[#e05637] transition-colors duration-200 flex items-center justify-center gap-2 shadow-md cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isLoading ? (
+                    <span className="font-mono animate-pulse">SENDING...</span>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>{t('contact.form.submitBtn')}</span>
+                    </>
+                  )}
+                </button>
+              </form>
             </div>
           </div>
         </div>
