@@ -32,7 +32,7 @@ export default function Contact() {
     setError('');
 
     try {
-      const response = await fetch('https://api-kylliankoniz.onrender.com', {
+      const response = await fetch('https://api-kylliankoniz.onrender.com/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
