@@ -26,16 +26,17 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Set loading state and reset previous feedback messages
     setIsLoading(true);
     setSuccess('');
     setError('');
 
     try {
-      const response = await fetch('https://api-kylliankoniz.onrender.com/api/contact', {
+      // ⬇️ THAY ĐƯỜNG LINK RENDER BẰNG LINK FORMSPREE CỦA BẠN VÀO ĐÂY ⬇️
+      const response = await fetch('https://formspree.io/f/xqerlbgb', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Accept': 'application/json' // Thêm header này để Formspree hiểu định dạng JSON
         },
         body: JSON.stringify({
           name: formData.name,
@@ -46,16 +47,15 @@ export default function Contact() {
 
       const data = await response.json().catch(() => ({}));
 
-      if (response.ok || response.status === 201) {
-        // Success: Reset form inputs and set success feedback
+      if (response.ok) {
+        // Success
         setFormData({ name: '', email: '', message: '' });
-        setSuccess(data.message || t('contact.form.successMsg') || 'Message sent successfully!');
+        setSuccess('Message sent successfully! Thank you for reaching out.');
       } else {
-        // Server returned non-2xx status
-        setError(data.message || data.error || 'Failed to send message. Please try again.');
+        // Lỗi từ Formspree trả về
+        setError(data.error || 'Failed to send message. Please try again.');
       }
     } catch (err) {
-      // Network or general fetch failure
       setError('Network error: Unable to reach the server. Please check your connection.');
     } finally {
       setIsLoading(false);
