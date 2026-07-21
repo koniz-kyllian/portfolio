@@ -1,0 +1,82 @@
+{
+  "nav": {
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hello, I'm",
+    "name": "Nguyen Hoang Trung Khanh",
+    "role": "Fullstack Developer",
+    "slogan": "I build tomorrow from fragments of impossible",
+    "ctaProjects": "View My Work",
+    "ctaContact": "Contact Me"
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "Passionate about building impactful digital experiences",
+    "bio": "Hi, I'm Nguyen Hoang Trung Khanh, a second-year Information Technology student who is passionate about building meaningful digital experiences and continuously learning new technologies. I currently serve as the Secretary of my local Youth Union while also managing Social Media for the music group Ngồi Hát Đỡ Buồn, where I strengthen my leadership, communication, and content creation skills. Beyond technology, I enjoy traveling and photography, finding inspiration in every new place and every story captured through the lens. I'm always eager to embrace new challenges, grow both personally and professionally, and create impactful solutions through technology.",
+    "highlights": {
+      "education": "2nd-Year IT Student",
+      "leadership": "Youth Union Secretary",
+      "media": "Social Media Manager",
+      "interests": "Photography & Travel"
+    }
+  },
+  "skills": {
+    "title": "Skills & Tech Stack",
+    "subtitle": "Core tools and technologies I use to build scalable web applications"
+  },
+  "projects": {
+    "title": "Featured Projects",
+    "subtitle": "A selection of projects showcasing fullstack development and AI integration",
+    "labels": {
+      "role": "Role",
+      "tech": "Tech Stack",
+      "result": "Result & Impact"
+    },
+    "list": [
+      {
+        "id": 1,
+        "name": "AI-Powered Task Manager",
+        "role": "Fullstack Developer",
+        "tech": ["React", "Tailwind", "AI API"],
+        "result": "Optimized daily workflow processes, boosting productivity by 30% through intelligent AI recommendations."
+      },
+      {
+        "id": 2,
+        "name": "E-Commerce Dashboard",
+        "role": "Frontend Developer",
+        "tech": ["React", "Vite", "Tailwind"],
+        "result": "Architected an intuitive management dashboard featuring sub-1-second page load speeds."
+      },
+      {
+        "id": 3,
+        "name": "Social Media Analyzer",
+        "role": "Backend & Database",
+        "tech": ["React", "MongoDB"],
+        "result": "Collected and analyzed user engagement data, delivering a 20% reach improvement for media campaigns."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Get In Touch",
+    "subtitle": "Have a project in mind or want to collaborate? Feel free to reach out!",
+    "form": {
+      "nameLabel": "Your Name",
+      "namePlaceholder": "John Doe",
+      "emailLabel": "Your Email",
+      "emailPlaceholder": "john@example.com",
+      "messageLabel": "Your Message",
+      "messagePlaceholder": "Tell me about your project...",
+      "submitBtn": "Send Message",
+      "sending": "Sending...",
+      "successMsg": "Thank you! Your message has been sent successfully."
+    }
+  },
+  "footer": {
+    "rights": "Nguyen Hoang Trung Khanh. All rights reserved.",
+    "crafted": "Designed in Minimalist-Studio Concrete style."
+  }
+}

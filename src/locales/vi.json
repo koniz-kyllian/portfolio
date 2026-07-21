@@ -1,0 +1,82 @@
+{
+  "nav": {
+    "about": "Về Tôi",
+    "skills": "Kỹ Năng",
+    "projects": "Dự Án",
+    "contact": "Liên Hệ"
+  },
+  "hero": {
+    "greeting": "Xin chào, tôi là",
+    "name": "Nguyễn Hoàng Trung Khánh",
+    "role": "Fullstack Developer",
+    "slogan": "Tôi xây dựng ngày mai từ những mảnh ghép của điều tưởng chừng bất khả thi",
+    "ctaProjects": "Xem Dự Án",
+    "ctaContact": "Liên Hệ"
+  },
+  "about": {
+    "title": "Về Tôi",
+    "subtitle": "Đam mê xây dựng các sản phẩm số mang lại giá trị cho người dùng",
+    "bio": "Xin chào, mình là Nguyễn Hoàng Trung Khánh, sinh viên năm 2 ngành Công nghệ Thông tin với niềm đam mê xây dựng những sản phẩm số mang lại giá trị cho người dùng. Hiện mình đang đảm nhiệm vai trò Bí thư Chi đoàn khu phố và phụ trách Social Media cho nhóm nhạc Ngồi Hát Đỡ Buồn, nơi mình phát triển kỹ năng lãnh đạo, sáng tạo nội dung và làm việc nhóm. Bên cạnh công nghệ, mình yêu thích du lịch và nhiếp ảnh, bởi mỗi chuyến đi đều mang đến những góc nhìn mới và nguồn cảm hứng cho công việc cũng như cuộc sống. Mình luôn sẵn sàng học hỏi, đón nhận thử thách và không ngừng hoàn thiện bản thân trên hành trình trở thành một lập trình viên chuyên nghiệp.",
+    "highlights": {
+      "education": "Sinh viên năm 2 CNTT",
+      "leadership": "Bí thư Chi đoàn khu phố",
+      "media": "Social Media @ Ngồi Hát Đỡ Buồn",
+      "interests": "Du lịch & Nhiếp ảnh"
+    }
+  },
+  "skills": {
+    "title": "Kỹ Năng & Công Nghệ",
+    "subtitle": "Công nghệ và công cụ tôi sử dụng để phát triển ứng dụng"
+  },
+  "projects": {
+    "title": "Dự Án Nổi Bật",
+    "subtitle": "Danh sách các dự án phát triển web và tích hợp trí tuệ nhân tạo",
+    "labels": {
+      "role": "Vai trò",
+      "tech": "Công nghệ",
+      "result": "Kết quả"
+    },
+    "list": [
+      {
+        "id": 1,
+        "name": "AI-Powered Task Manager",
+        "role": "Fullstack Developer",
+        "tech": ["React", "Tailwind", "AI API"],
+        "result": "Tối ưu hóa quy trình quản lý công việc hàng ngày, tăng 30% hiệu suất làm việc nhờ gợi ý từ AI."
+      },
+      {
+        "id": 2,
+        "name": "E-Commerce Dashboard",
+        "role": "Frontend Developer",
+        "tech": ["React", "Vite", "Tailwind"],
+        "result": "Xây dựng giao diện quản trị trực quan, tốc độ load trang dưới 1 giây."
+      },
+      {
+        "id": 3,
+        "name": "Social Media Analyzer",
+        "role": "Backend & Database",
+        "tech": ["React", "MongoDB"],
+        "result": "Thu thập và phân tích tương tác người dùng, giúp cải thiện 20% reach cho các chiến dịch truyền thông."
+      }
+    ]
+  },
+  "contact": {
+    "title": "Liên Hệ",
+    "subtitle": "Bạn có ý tưởng dự án hoặc muốn hợp tác? Hãy gửi lời nhắn cho tôi!",
+    "form": {
+      "nameLabel": "Họ và Tên",
+      "namePlaceholder": "Nguyễn Văn A",
+      "emailLabel": "Email của bạn",
+      "emailPlaceholder": "example@gmail.com",
+      "messageLabel": "Lời nhắn",
+      "messagePlaceholder": "Nội dung lời nhắn...",
+      "submitBtn": "Gửi Lời Nhắn",
+      "sending": "Đang gửi...",
+      "successMsg": "Cảm ơn bạn! Lời nhắn đã được gửi thành công."
+    }
+  },
+  "footer": {
+    "rights": "Nguyễn Hoàng Trung Khánh. Tất cả quyền được bảo lưu.",
+    "crafted": "Thiết kế theo phong cách Minimalist-Studio Concrete."
+  }
+}
